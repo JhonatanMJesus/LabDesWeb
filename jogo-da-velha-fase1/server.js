@@ -46,51 +46,53 @@ wss.on("connection", (ws) => {
         ws.send(JSON.stringify({type:"assign", symbol:null}));
     }
     ws.send(JSON.stringify({type:"state", board, currentPlayer, gameActive}));
-});
 
-wss.on("close", () => {
-    const index = players.findIndex(p => p.ws === ws);
-    if(index !== -1) {
-        players.slice(index, 1);
-        currentPlayer = "X";
-        gameActive = true;
-        broadCast({type:"state", board, currentPlayer, gameActive})
-    }
-})
-wss.on("message", (msg) => {
-    const data = JSON.parse(msg);
-    if(data.type === "restart") {
-        board = Array(9).fill(null);
-        currentPlayer = "X";
-        gameActive = true;
-        broadcast({type:"state", board, currentPlayer, gameActive});
-        return;
-    }
-    if(!gameActive) {
-        return;
-    }
-    if(data.type === "play") {
-        const{index, symbol} = data;
-        const player = players.find(p => p.ws === ws);
-        if(!player || player.symbol !== symbol) {
+    ws.on("close", () => {
+        const index = players.findIndex(p => p.ws === ws);
+        if(index !== -1) {
+            players.splice(index, 1);
+            currentPlayer = "X";
+            gameActive = true;
+            board = Array(9).fill(null);
+            broadcast({type: "gameOver", board, currentPlayer, gameActive, reason: "Disconnect"});
+            broadCast({type:"state", board, currentPlayer, gameActive});
+        }
+    })
+    ws.on("message", (msg) => {
+        const data = JSON.parse(msg);
+        if(data.type === "restart") {
+            board = Array(9).fill(null);
+            currentPlayer = "X";
+            gameActive = true;
+            broadcast({type:"state", board, currentPlayer, gameActive});
             return;
         }
-        if(symbol === currentPlayer && board[index] === null) {
-            board[index] = symbol;
+        if(!gameActive) {
+            return;
         }
-        if(checkWin(board, symbol)) {
-            broadCast({type:"gameOver", winner:symbol, board});
-            gameActive = false;
-            currentPlayer = null;
-        } else if(board.every(cell => cell !== null)){
-            broadCast({type:"gameOver", winner:null, board});
-            gameActive = false;
-            currentPlayer = null;
-        } else {
-            currentPlayer = currentPlayer === "X" ? "O" : "X";
-            broadCast({type:"play", index, symbol, next:currentPlayer, board});
+        if(data.type === "play") {
+            const{index, symbol} = data;
+            const player = players.find(p => p.ws === ws);
+            if(!player || player.symbol !== symbol) {
+                return;
+            }
+            if(symbol === currentPlayer && board[index] === null) {
+                board[index] = symbol;
+                if(checkWin(board, symbol)) {
+                    broadCast({type:"gameOver", winner:symbol, board});
+                    gameActive = false;
+                    currentPlayer = null;
+                } else if(board.every(cell => cell !== null)){
+                    broadCast({type:"gameOver", winner:null, board});
+                    gameActive = false;
+                    currentPlayer = null;
+                } else {
+                    currentPlayer = currentPlayer === "X" ? "O" : "X";
+                    broadCast({type:"play", index, symbol, next:currentPlayer, board});
+                }
+            }
         }
-    }
+    })
 });
 
 const port = 3000;
