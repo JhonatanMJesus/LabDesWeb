@@ -25,7 +25,7 @@
     <script>
         window.addEventListener("load", ()=>{
             // const ws = new WebSocket("ws://192.168.2.159:3000"); 
-            const ws = new WebSocket("ws://${location.host}");
+            const ws = new WebSocket(`ws://${location.host}`);
             const board = document.getElementById("board");
             const status = document.getElementById("status");
             const restart = document.getElementById("restartBtn");
