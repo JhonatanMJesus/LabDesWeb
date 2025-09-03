@@ -1,11 +1,10 @@
-import React from "react";
-
+import react from "react";
 export default function Scoreboard({scores})
 {
-    return (
-        <div className="scoreBoard">
-            <span>Vitórias X: {scores.x}</span>
-            <span>Vitórias O: {scores.o}</span>
+    return(
+        <div className="scoreboard">
+            <span>Vitórias X: {scores.X}</span>
+            <span>Vitórias O: {scores.O}</span>
             <span>Empates: {scores.draw}</span>
         </div>
     )
