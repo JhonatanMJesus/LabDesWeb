@@ -7,10 +7,10 @@ const players = [];
 
 function broadCast(data)
 {
-    players.forEach((player)=>{
-        if(player.ws.readyState == WebSocket.OPEN)
+    wss.clients.forEach((player)=>{
+        if(wss.clients.readyState == WebSocket.OPEN)
         {
-            player.ws.send(JSON.stringify(data));
+            wss.clients.send(JSON.stringify(data));
         }
     });
 }
