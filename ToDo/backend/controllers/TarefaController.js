@@ -64,4 +64,40 @@ export default class TarefaController
             res.status(500).json({message: "Problema ao remover a tarefa.", error})
         }
     }
+
+    static async getAll(req, res)
+    {
+        try
+        {
+            const tarefas = await Tarefa.find();
+            res.status(200).json(tarefas);
+        }
+        catch(error)
+        {
+            res.status(500).json({message: "Problema ao buscar as tarefas.", error});
+        }
+    }
+
+    static async getOne(req, res)
+    {
+        const id = req.params.id;
+        const ObjectId = Types.ObjectId;
+        if(!ObjectId.isValid(id))
+        {
+            return res.status(422).json({message: "ID Inválido"});
+        }
+        try
+        {
+            const tarefa = await Tarefa.findOne({ _id:id });
+            if(!tarefa)
+            {
+                return res.status(404).json({message: "Tarefa não encontrada!"})
+            }
+            res.status(200).json(tarefa);
+        }
+        catch(error)
+        {
+            res.status(500).json({message: "Problema ao buscar a tarefa.", error});
+        }
+    }
 }
