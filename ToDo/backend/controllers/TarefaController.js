@@ -69,7 +69,7 @@ export default class TarefaController
     {
         try
         {
-            const tarefas = await Tarefa.find();
+            const tarefas = await Tarefa.find().sort("-createdAt");
             res.status(200).json(tarefas);
         }
         catch(error)
