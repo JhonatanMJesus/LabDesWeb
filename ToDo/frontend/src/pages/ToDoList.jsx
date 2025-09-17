@@ -1,7 +1,8 @@
-import { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {Link} from "react-router-dom";
 import { getToDos, removeToDo } from "../api/ToDoApi";
 import ToDoItem from "../components/ToDoItem";
+import Style from "./ToDoList.module.css";
 
 export default function ToDoList(){
     const [toDos, setToDos] = useState([]);
@@ -10,9 +11,47 @@ export default function ToDoList(){
 
     const fetch = async () => {
         try {
-            
+            setLoading(true);
+            const res = await getToDos();
+            setToDos(res);
         } catch (error) {
-            
+            setError(error.Message || "Erro")
+        } finally {
+            setLoading(false);
         }
     }
+
+    useEffect(() => {fetch()}, []);
+    const handleDelete = async(id) => {
+        try {
+            setLoading(true);
+            await removeToDo(id)
+        } catch (error) {
+            setError(error.Message || "Erro");
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    return (
+        <div>
+            <div>
+                <h2>Tarefas</h2>
+                <Link to="/new" className={Style.link}>Nova Tarefa</Link>
+            </div>
+            {loading && <p>Carregando...</p>}
+            {error && <p>{error}</p>}
+            <div>
+                {toDos?.length === 0 && !loading?(
+                    <p>Nenhuma tarefa encontrada.</p>
+                ) : (
+                    toDos?.map(
+                        toDo => (
+                            <ToDoItem key={toDo._id} toDo={toDo} onDelete={() => handleDelete(toDo._id)} />
+                        )
+                    )
+                )}
+            </div>
+        </div>
+    );
 }

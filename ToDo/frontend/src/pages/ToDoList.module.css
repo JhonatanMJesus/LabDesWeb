@@ -1,0 +1,25 @@
+/* src/components/TodoList.module.css */
+
+.container {
+  @apply space-y-3;
+}
+
+.header {
+  @apply flex items-center justify-between mb-4;
+}
+
+.title {
+  @apply text-xl font-medium;
+}
+
+.link {
+  @apply text-sm text-blue-600;
+}
+
+.error {
+  @apply text-red-600;
+}
+
+.noTasks {
+  @apply text-gray-500;
+}
