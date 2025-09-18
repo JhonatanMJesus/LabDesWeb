@@ -1,13 +1,13 @@
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createToDo } from "../api/ToDoApi";
-import Style from "ToDoForm.module.css";
+import Style from "./ToDoForm.module.css";
 
 export default function ToDoForm() {
     const [titulo, setTitulo] = useState(""); 
     const [descricao, setDescricao] = useState(""); 
     const [dataLimite, setDataLimite] = useState(""); 
-    const [situacao, setSituacao] = useState("Pendente"); 
+    const [situacao] = useState("Pendente"); 
     const [saving, setSaving] = useState(false);
 
     const navigate = useNavigate();

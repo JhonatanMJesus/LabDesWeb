@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getToDos, removeToDo } from "../api/ToDoApi";
 import ToDoItem from "../components/ToDoItem";
 import Style from "./ToDoList.module.css";
@@ -13,7 +13,7 @@ export default function ToDoList(){
         try {
             setLoading(true);
             const res = await getToDos();
-            setToDos(res);
+            setToDos(res.data);
         } catch (error) {
             setError(error.Message || "Erro")
         } finally {
@@ -22,6 +22,7 @@ export default function ToDoList(){
     }
 
     useEffect(() => {fetch()}, []);
+
     const handleDelete = async(id) => {
         try {
             setLoading(true);
@@ -30,13 +31,14 @@ export default function ToDoList(){
             setError(error.Message || "Erro");
         } finally {
             setLoading(false);
+            fetch();
         }
     }
 
     return (
         <div>
             <div>
-                <h2>Tarefas</h2>
+                <h2 className={Style.title}>Tarefas</h2>
                 <Link to="/new" className={Style.link}>Nova Tarefa</Link>
             </div>
             {loading && <p>Carregando...</p>}
