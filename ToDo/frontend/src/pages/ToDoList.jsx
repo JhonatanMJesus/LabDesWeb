@@ -37,15 +37,15 @@ export default function ToDoList(){
 
     return (
         <div>
-            <div>
+            <div className={Style.header}>
                 <h2 className={Style.title}>Tarefas</h2>
                 <Link to="/new" className={Style.link}>Nova Tarefa</Link>
             </div>
             {loading && <p>Carregando...</p>}
-            {error && <p>{error}</p>}
-            <div>
+            {error && <p className={Style.error}>{error}</p>}
+            <div className={Style.container}>
                 {toDos?.length === 0 && !loading?(
-                    <p>Nenhuma tarefa encontrada.</p>
+                    <p className={Style.noTasks}>Nenhuma tarefa encontrada.</p>
                 ) : (
                     toDos?.map(
                         toDo => (

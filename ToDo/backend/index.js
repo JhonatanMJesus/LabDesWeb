@@ -10,7 +10,7 @@ app.use(express.json())
 //cors comunicação entre duas aplicações que rodam em portas diferentes
 app.use(cors({
     credentials: true,
-    origin: "http://localhost:3000"
+    origin: "http://localhost:5173"
 }))
 
 app.use("/todo", routes);
