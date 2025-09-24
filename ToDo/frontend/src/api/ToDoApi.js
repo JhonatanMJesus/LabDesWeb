@@ -10,5 +10,6 @@ const api = axios.create({
 export const getToDos = () => api.get("/getAll");
 export const createToDo = (payload) => api.post("/Create", payload);
 export const removeToDo = (id) => api.delete(`/${id}`);
+// export const updateOne = (id, payload) => api.patch(`/update/${id}`, payload);
 
 export default api;

@@ -80,15 +80,15 @@ export default class TarefaController
 
     static async getOne(req, res)
     {
-        const id = req.params.id;
-        const ObjectId = Types.ObjectId;
-        if(!ObjectId.isValid(id))
-        {
-            return res.status(422).json({message: "ID Inválido"});
-        }
         try
         {
-            const tarefa = await Tarefa.findOne({ _id:id });
+            const id = req.params.id;
+            const ObjectId = Types.ObjectId;
+            if(!ObjectId.isValid(id))
+            {
+                return res.status(422).json({message: "ID Inválido"});
+            }
+            const tarefa = await Tarefa.findById(id);
             if(!tarefa)
             {
                 return res.status(404).json({message: "Tarefa não encontrada!"})
@@ -99,5 +99,62 @@ export default class TarefaController
         {
             res.status(500).json({message: "Problema ao buscar a tarefa.", error});
         }
+    }
+
+    static async updateCompleto(req, res){
+        try 
+        {
+            const id = req.params.id;
+            const {titulo, descricao, dataLimite, situacao} = req.body;
+            const ObjectId = Types.ObjectId;
+            if(!ObjectId.isValid(id))
+            {
+                return res.status(422).json({message: "ID Inválido"});
+            }
+            if(!titulo || !descricao || !dataLimite || !situacao)
+            {
+                return res.status(422).json({message: "É necessário informar todos os dados"});
+            }
+            const updateData = {
+                titulo,
+                descricao,
+                dataLimite,
+                situacao
+            }
+            const updatedTarefa = await Tarefa.findByIdAndUpdate(id, updateData, {new:true, runValidators:true});
+            if(!updatedTarefa)
+            {
+                return res.status(404).json({message: "Tarefa não encontrada"});
+            }
+            res.status(200).json({message: "Tarefa alterada com sucesso", updatedTarefa});
+        }
+        catch(error)
+        {
+            res.status(500).json({message: "Erro ao alterar a taerfa", error})
+        }
+    }
+
+    static async updateParcial(req, res){
+        try
+        {
+            const id = req.params.id;
+            const {situacao} = req.body;
+            const ObjectId = Types.ObjectId;
+            if(!ObjectId.isValid(id))
+            {
+                return res.status(422).json({message: "ID Inválido"});
+            }
+            const updatedTarefa = await Tarefa.findByIdAndUpdate(id, {situacao}, {new:true});
+            if(!updatedTarefa)
+            {
+                return res.status(404).json({message: "Tarefa não encontrada"});
+            }
+            res.status(200).json({message: "Situação alterada com sucesso", updatedTarefa});
+        }
+        catch(error)
+        {
+            res.status(500).json({message: "Erro ao alterar a situação", error})
+        }
+        
     }
 }
