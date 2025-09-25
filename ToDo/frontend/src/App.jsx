@@ -1,27 +1,20 @@
-// import { useState } from 'react'
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import ToDoList from './pages/ToDoList'
-import ToDoForm from './pages/ToDoForm';
+import {Routes, Route } from "react-router-dom";
+import TodoList from "./pages/TodoList";
+import TodoNew from "./pages/TodoNew";
+import TodoEdit from "./pages/TodoEdit";
 
 function App() {
-
   return (
-    <div className='min-h-screen bg-gray-50 p-6'>
-      <header className='max-w-3xl mx-auto mb-6'>
-        <nav className='flex items-center justify-between'>
-          <h1 className='text-2xl font-semibold'>ToDo</h1>
-        </nav>
-      </header>
-      <main className='max-w-3xl mx-auto bg-white rounded-lg shadow p-6'>
-        <BrowserRouter>
-          <Routes>
-            <Route path='/' element={<ToDoList />} />
-            <Route path='/new' element={<ToDoForm />} />
-          </Routes>
-        </BrowserRouter>
-      </main>
-    </div>
-  )
+    
+      <div className="container mx-auto p-4">
+        <Routes>
+          <Route path="/" element={<TodoList />} />
+          <Route path="/new" element={<TodoNew />} />        {/* ROTA "Nova tarefa" */}
+          <Route path="/edit/:id" element={<TodoEdit />} />
+        </Routes>
+      </div>
+   
+  );
 }
 
-export default App
+export default App;

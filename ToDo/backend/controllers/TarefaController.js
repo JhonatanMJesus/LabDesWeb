@@ -80,14 +80,14 @@ export default class TarefaController
 
     static async getOne(req, res)
     {
+        const id = req.params.id;
+        const ObjectId = Types.ObjectId;
+        if(!ObjectId.isValid(id))
+        {
+            return res.status(422).json({message: "ID Inválido"});
+        }
         try
         {
-            const id = req.params.id;
-            const ObjectId = Types.ObjectId;
-            if(!ObjectId.isValid(id))
-            {
-                return res.status(422).json({message: "ID Inválido"});
-            }
             const tarefa = await Tarefa.findById(id);
             if(!tarefa)
             {
