@@ -102,15 +102,15 @@ export default class TarefaController
     }
 
     static async updateCompleto(req, res){
+        const id = req.params.id;
+        const {titulo, descricao, dataLimite, situacao} = req.body;
+        const ObjectId = Types.ObjectId;
+        if(!ObjectId.isValid(id))
+        {
+            return res.status(422).json({message: "ID Inválido"});
+        }
         try 
         {
-            const id = req.params.id;
-            const {titulo, descricao, dataLimite, situacao} = req.body;
-            const ObjectId = Types.ObjectId;
-            if(!ObjectId.isValid(id))
-            {
-                return res.status(422).json({message: "ID Inválido"});
-            }
             if(!titulo || !descricao || !dataLimite || !situacao)
             {
                 return res.status(422).json({message: "É necessário informar todos os dados"});
@@ -135,15 +135,15 @@ export default class TarefaController
     }
 
     static async updateParcial(req, res){
+        const id = req.params.id;
+        const {situacao} = req.body;
+        const ObjectId = Types.ObjectId;
+        if(!ObjectId.isValid(id))
+        {
+            return res.status(422).json({message: "ID Inválido"});
+        }
         try
         {
-            const id = req.params.id;
-            const {situacao} = req.body;
-            const ObjectId = Types.ObjectId;
-            if(!ObjectId.isValid(id))
-            {
-                return res.status(422).json({message: "ID Inválido"});
-            }
             const updatedTarefa = await Tarefa.findByIdAndUpdate(id, {situacao}, {new:true});
             if(!updatedTarefa)
             {
