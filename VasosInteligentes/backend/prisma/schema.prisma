@@ -10,6 +10,43 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id Int @id @default(autoincrement())
+  nome String
+  email String @unique
+  senha String
+  perfil Perfil @default(user)
+  vasos Vaso[]
+  criadoEm DateTime @default(now())
+  @@map("usuarios")
+}
+
+model Vaso {
+  id Int @id @default(autoincrement())
+  nomePlanta String
+  descricao String?
+  fotoUrl String?
+  usuario Usuario @relation(fields:[usuarioId], references:[id])
+  usuarioId Int
+  leituras Leitura[]
+  criadoEm DateTime @default(now())
+  @@map("vasos")
+}
+
+model Leitura {
+  id Int @id @default(autoincrement())
+  vaso Vaso @relation(fields:[vasoId], references:[id])
+  vasoId Int
+  umidade Float
+  criadoEm DateTime @default(now())
+  @@map("leituras")
+}
+
+enum Perfil {
+  admin
+  user
 }
