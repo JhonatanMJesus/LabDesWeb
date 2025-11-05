@@ -1,0 +1,31 @@
+/* src/pages/RegisterUser.module.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --green-600: #2f855a;
+  --white: #ffffff;
+}
+
+.container {
+  @apply min-h-screen flex items-center justify-center bg-white;
+  background: linear-gradient(180deg, #f7fff8 0%, #ffffff 100%);
+}
+
+.card {
+  @apply w-full max-w-lg p-6 rounded-lg shadow-md;
+  background: var(--white);
+  border: 1px solid rgba(47,133,90,0.08);
+}
+
+.title {
+  @apply text-2xl font-semibold mb-4;
+  color: var(--green-600);
+}
+
+.label { @apply block text-sm font-medium mt-3 mb-1; }
+.input { @apply w-full px-3 py-2 border rounded; border-color: rgba(0,0,0,0.08); }
+.button { @apply w-full mt-5 py-2 rounded text-white; background: var(--green-600); border: none; }
+
+.message { @apply text-sm text-green-700 mb-2; }

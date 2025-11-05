@@ -1,9 +1,8 @@
 {
-  // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "target": "ES2022",                   // Para async/await e recursos modernos
+    "module": "CommonJS",                   // Usa ESModules nativos
+    "moduleResolution": "Node",
     "outDir": "dist",
     "rootDir": "src",
     "strict": true,

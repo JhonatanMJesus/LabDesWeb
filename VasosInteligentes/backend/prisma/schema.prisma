@@ -1,8 +1,4 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// prisma/schema.prisma
 
 generator client {
   provider = "prisma-client-js"
@@ -10,42 +6,45 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE_URL") // você já configurou isso
 }
 
 model Usuario {
-  id Int @id @default(autoincrement())
-  nome String
-  email String @unique
-  senha String
-  perfil Perfil @default(user)
-  vasos Vaso[]
+  id       Int      @id @default(autoincrement())
+  nome     String
+  email    String   @unique
+  senha    String
+  perfil   Perfil   @default(User)
+  vasos    Vaso[]
   criadoEm DateTime @default(now())
+
   @@map("usuarios")
 }
 
 model Vaso {
-  id Int @id @default(autoincrement())
-  nomePlanta String
-  descricao String?
-  fotoUrl String?
-  usuario Usuario @relation(fields:[usuarioId], references:[id])
-  usuarioId Int
-  leituras Leitura[]
-  criadoEm DateTime @default(now())
+  id           Int       @id @default(autoincrement())
+  nome         String
+  descricao    String?
+  fotoUrl      String?
+  usuario      Usuario   @relation(fields: [usuarioId], references: [id])
+  usuarioId    Int
+  leituras     Leitura[]
+  criadoEm     DateTime  @default(now())
+
   @@map("vasos")
 }
 
 model Leitura {
-  id Int @id @default(autoincrement())
-  vaso Vaso @relation(fields:[vasoId], references:[id])
-  vasoId Int
-  umidade Float
-  criadoEm DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  vaso      Vaso     @relation(fields: [vasoId], references: [id])
+  vasoId    Int
+  umidade   Float
+  criadaEm  DateTime @default(now())
+
   @@map("leituras")
 }
 
 enum Perfil {
-  admin
-  user
+  Admin
+  User
 }

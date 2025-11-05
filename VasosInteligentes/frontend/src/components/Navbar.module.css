@@ -1,0 +1,39 @@
+/* src/components/Navbar.module.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Colors: verde e branco (natureza) */
+:root {
+  --green-600: #2f855a; /* escuro */
+  --green-400: #68d391; /* claro */
+  --white: #ffffff;
+}
+
+.nav {
+  @apply flex items-center justify-between px-4 py-3 bg-white shadow;
+  background: linear-gradient(90deg, var(--white), var(--white));
+}
+
+.brand {
+  @apply text-lg font-semibold;
+  color: var(--green-600);
+  text-decoration: none;
+}
+
+.left { @apply flex items-center; }
+.right { @apply flex items-center gap-3; }
+
+.link {
+  @apply px-3 py-1 rounded hover:underline;
+  color: var(--green-600);
+  text-decoration: none;
+}
+
+.button {
+  @apply px-3 py-1 rounded border;
+  border-color: var(--green-600);
+  color: var(--green-600);
+  background: transparent;
+  cursor: pointer;
+}
