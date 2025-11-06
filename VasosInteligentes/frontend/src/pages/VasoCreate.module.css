@@ -1,0 +1,45 @@
+.container {
+  @apply flex justify-center items-start bg-gradient-to-b from-green-50 to-white min-h-[calc(100vh-100px)] pt-10;
+}
+
+
+.card {
+  @apply bg-white p-8 rounded-2xl shadow-xl w-full max-w-md flex flex-col gap-5;
+}
+
+
+.title {
+  @apply text-center text-3xl font-bold text-green-700;
+}
+
+
+.formGroup {
+  @apply flex flex-col gap-1; /* Espaçamento pequeno (4px) entre label e input */
+}
+
+
+.label {
+  @apply font-semibold text-gray-700;
+}
+
+
+.input {
+  @apply border border-gray-300 rounded-lg px-4 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-green-600 w-full transition duration-150 ease-in-out;
+}
+
+
+.button {
+  @apply bg-green-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-700 transition duration-300 ease-in-out mt-1 shadow-md hover:shadow-lg;
+}
+
+.message { 
+  @apply p-3 rounded-lg font-medium text-sm text-center border w-full box-border;
+}
+
+.success {
+  @apply bg-green-100 text-green-800 border-green-300 border-2;
+}
+
+.error {
+  @apply bg-red-100 text-red-800 border-red-300 border-2;
+}

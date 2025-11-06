@@ -27,7 +27,7 @@ export const register = async(req:Request, res:Response)=>{
             select:{id:true, nome:true, email:true, perfil:true, criadoEm:true}
         });
         //geração token caso faça automaticamente o login do usuário que se cadastrou
-        return res.status(200).json({message:"Usuário inserido com sucesso"})
+        return res.status(200).json({message:"Usuário inserido com sucesso", novoUsuario:novoUsuario})
     }   
     catch (error) {
         if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
@@ -69,14 +69,15 @@ export const login = async(req:Request, res:Response)=>{
             maxAge: JWT_EXPIRATION_MS
         });
         return res.status(200).json({
-            message:"Login com sucesso",
+            message: 'Login realizado com sucesso. Token salvo em cookie.',
             usuario: {
-                id: usuario.id,
-                nome: usuario.nome,
-                email: usuario.email,
-                perfil: usuario.perfil
+                id: usuario.id, 
+                nome: usuario.nome, 
+                email: usuario.email, 
+                perfil: usuario.perfil,
             },
-            token: token})
+            token: token
+        });
     }
     catch(error){
         console.log("Erro no processo login", error);

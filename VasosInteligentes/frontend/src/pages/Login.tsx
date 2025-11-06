@@ -41,9 +41,12 @@ const Login: React.FC = () => {
           />
 
         
-          <button type="submit" className="bg-green-600 text-white font-semibold py-2 px-4 rounded-lg">
-            Entrar
-          </button>
+          <button 
+  type="submit" 
+  className="bg-green-600 text-white font-semibold py-2 px-4 rounded-lg"
+>
+  Entrar
+</button>
           
         </form>
       </div>

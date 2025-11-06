@@ -1,4 +1,3 @@
-// src/components/Navbar.tsx
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './Navbar.module.css';
@@ -21,10 +20,26 @@ const Navbar: React.FC = () => {
 
       <div className={styles.right}>
         {!user && <Link to="/login" className={styles.link}>Login</Link>}
-        {user && user.perfil === 'Admin' && (
-          <Link to="/admin/register-user" className={styles.link}>Cadastrar Usuário</Link>
+
+        {user && (
+          <>
+           
+            <Link to="/vasos/novo" className={styles.link}>
+              Cadastrar Vaso
+            </Link>
+
+          
+            {user.perfil === 'Admin' && (
+              <Link to="/admin/register-user" className={styles.link}>
+                Cadastrar Usuário
+              </Link>
+            )}
+
+            <button className={styles.button} onClick={handleLogout}>
+              Logout
+            </button>
+          </>
         )}
-        {user && <button className={styles.button} onClick={handleLogout}>Logout</button>}
       </div>
     </nav>
   );

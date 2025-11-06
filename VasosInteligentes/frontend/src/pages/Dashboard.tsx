@@ -11,6 +11,9 @@ const Dashboard: React.FC = () => {
         <h1 className={styles.title}>Bem-vinda(o) {user ? user.nome : 'usuário'}</h1>
         <p className={styles.subtitle}>Painel inicial — aqui você adiciona seus componentes de vasos inteligentes.</p>
       </div>
+      <div>
+        
+      </div>
     </div>
   );
 };
